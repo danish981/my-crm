@@ -15,8 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Session;
 
-class AdminController extends Controller
-{
+class AdminController extends Controller {
 
     /**
      * <h3>login(Request $request)</h3>
@@ -27,8 +26,7 @@ class AdminController extends Controller
      * @return Application|Factory|View message
      * @author danish mehmood
      */
-    public function login(Request $request)
-    {   // login
+    public function login(Request $request) {   // login
         if ($request['submit'] === 'submit') {
             $request->validate([
                 'email' => 'required',
@@ -43,6 +41,10 @@ class AdminController extends Controller
         return view('login');
     }
 
+    public function register() {
+
+    }
+
     /**
      * <h3>dashboard()</h3>
      * Simply let the user to the access the dashboard, which is home, and protected route
@@ -50,8 +52,7 @@ class AdminController extends Controller
      * @return Application|Factory|View to the dashboard
      * @author danish mehmood
      **/
-    public function dashboard()
-    {   // home
+    public function dashboard() {   // home
         return view('dashboard');
     }
 
@@ -63,8 +64,7 @@ class AdminController extends Controller
      * @return Application|RedirectResponse|Redirector
      * @author danish mehmood
      **/
-    public function logout()
-    {
+    public function logout() {
         Session::flush();
         Auth::logout();
         return redirect('login');
@@ -77,8 +77,7 @@ class AdminController extends Controller
      * @return Application|RedirectResponse|Redirector
      * @author danish mehmood
      */
-    public function addLead(Request $request)
-    { // add-lead
+    public function addLead(Request $request) { // add-lead
         if ($request['submit'] === 'submit') {
             $request->validate([
                 'first_name' => 'required',
@@ -94,13 +93,11 @@ class AdminController extends Controller
         return view('leads/add_lead');
     }
 
-    public function manageLeads()
-    {
+    public function manageLeads() {
         return view('leads/manage_leads')->with('leadsDataArr', Lead::all());
     }
 
-    public function deleteLead($id)
-    {   // delete-lead/{id}
+    public function deleteLead($id) {   // delete-lead/{id}
         $lead = Lead::find($id);
         if ($lead === NULL)
             return redirect('/leads/manage-leads');
@@ -108,8 +105,7 @@ class AdminController extends Controller
         return redirect('/leads/manage-leads');
     }
 
-    public function editLead($id, Request $request)
-    {    // edit-lead/{id}
+    public function editLead($id, Request $request) {    // edit-lead/{id}
         $lead = Lead::find($id);
         if ($lead === NULL)
             return redirect('/leads/manage-leads');
@@ -129,8 +125,7 @@ class AdminController extends Controller
         return view('/leads/edit_lead', ['lead_details' => $lead]);
     }
 
-    private function saveLead(Lead $lead, Request $request)
-    {
+    private function saveLead(Lead $lead, Request $request) {
         $lead->first_name = $request['first_name'];
         $lead->last_name = $request['last_name'];
         $lead->title = $request['title'];
@@ -148,14 +143,12 @@ class AdminController extends Controller
         return $lead->save();
     }
 
-    public function viewLead($id)
-    { // view-lead(id)
+    public function viewLead($id) { // view-lead(id)
         $lead = Lead::find($id);
         return ($lead == NULL) ? redirect('/leads/manage-leads') : view('/leads/view_lead', compact('lead'));
     }
 
-    public function convertLead($id, Request $request)
-    {  // convert-lead(id)
+    public function convertLead($id, Request $request) {  // convert-lead(id)
         $lead = Lead::find($id);
 
         if ($lead === NULL)
@@ -194,7 +187,7 @@ class AdminController extends Controller
             $deal->contact_id = $contact_id;
             $deal->save();
 
-            $lead->delete();
+            $lead->delete();    // todo : WHAT THE HELL ?????
 
             return redirect('/leads/manage-leads');
         }
@@ -202,8 +195,7 @@ class AdminController extends Controller
         return view('/leads/convert_lead', compact('lead'));
     }
 
-    public function defaultMethod(): void
-    {   
+    public function defaultMethod(): void {
         // default
         // todo : write practice code here for default method
     }

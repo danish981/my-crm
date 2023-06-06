@@ -6,6 +6,7 @@ use App\Models\Dummy;
 use Illuminate\Http\Request;
 
 class DummyController extends Controller {
+
     /**
      * Display a listing of the resource.
      *

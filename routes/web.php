@@ -22,7 +22,7 @@ Route::group(['middleware' => 'auth'], static function () {
         Route::get('/view-lead/{id}', [AdminController::class, 'viewLead']);
         Route::get('/convert-lead/{id}', [AdminController::class, 'convertLead']);
         Route::post('/convert-lead/{id}', [AdminController::class, 'convertLead']);
-        // todo : add more routes until completion
+        // todo : add more routes here
 
     });
 });
